@@ -1,5 +1,6 @@
 package com.github.calculator;
 
+import com.github.calculator.ui.CalculatorController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,7 +12,9 @@ public class CalculatorApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(CalculatorApplication.class.getResource("CalculatorView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        CalculatorController controller = new CalculatorController();
+        fxmlLoader.setController(controller);
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
