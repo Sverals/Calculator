@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class CalculatorController implements Initializable {
+   // public static final Calculator = new Calculator();
     @FXML
     private GridPane inputGrid;
     @FXML
@@ -81,6 +82,7 @@ public class CalculatorController implements Initializable {
         if (!Character.isDigit(buttonChar)) { //prevents non text buttons being added to output
 
             currentButton.setOnAction(event -> {
+                scrollPane.setHvalue(1.0);
                 outputLabel.setText(outputLabel.getText() + currentButtonValue);
             });
         }
@@ -94,6 +96,7 @@ public class CalculatorController implements Initializable {
            case 'U': //Undo Button action
                currentButton.setOnAction(event -> {
                    if (!outputLabel.getText().isEmpty()) {
+                       scrollPane.setHvalue(1.0);
                        String newText = outputLabel.getText().substring(0, outputLabel.getText().length() - 1);
                        outputLabel.setText(newText);
                    }
@@ -113,6 +116,7 @@ public class CalculatorController implements Initializable {
            default: break;
        }
        if (currentButtonValue.equals("x²")) { //adds power to output
+           scrollPane.setHvalue(1.0);
            currentButton.setOnAction(event -> {
            outputLabel.setText(outputLabel.getText() + "²");
            });
@@ -120,8 +124,15 @@ public class CalculatorController implements Initializable {
     }
 
     public void processEnterRequest(String input) {
+     /*   try {
+         String output = calcaulator.runExpression(input);
+
+        } catch (CustomException e){
+            errorLabel.setVisible();
+        }*/
         //send to calculator
         //receive response to post
+
     }
 
 
