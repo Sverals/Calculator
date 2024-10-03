@@ -5,4 +5,7 @@ module com.github.calculator {
 
     opens com.github.calculator to javafx.fxml;
     exports com.github.calculator;
+
+    opens com.github.calculator.ui to javafx.fxml;
+    exports com.github.calculator.ui;
 }

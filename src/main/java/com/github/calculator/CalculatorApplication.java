@@ -15,7 +15,7 @@ public class CalculatorApplication extends Application {
         CalculatorController controller = new CalculatorController();
         fxmlLoader.setController(controller);
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Hello!");
+        stage.setTitle("Calculator");
         stage.setScene(scene);
         stage.show();
     }
