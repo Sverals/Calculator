@@ -5,7 +5,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -16,6 +18,10 @@ public class CalculatorController implements Initializable {
     private GridPane inputGrid;
     @FXML
     private Label outputLabel;
+    @FXML
+    private HBox scrollingHBox;
+    @FXML
+    private ScrollPane scrollPane;
 
     public CalculatorController() {
     }
@@ -47,6 +53,8 @@ public class CalculatorController implements Initializable {
             String currentButtonValue = currButton.getText();
             if (Character.isDigit(currentButtonValue.charAt(0))) {
                 currButton.setOnAction(event -> {
+                    scrollPane.setHvalue(1.0);
+
                     StringBuilder sb = new StringBuilder(outputLabel.getText());
                     sb.append(currentButtonValue);
                     outputLabel.setText(sb.toString());
