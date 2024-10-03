@@ -14,4 +14,8 @@ public class CalculatorOperations {
         return x - y;
     }
 
+    public double squared(double x) {
+        return x * x;
+    }
+
 }

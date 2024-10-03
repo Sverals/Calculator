@@ -58,6 +58,22 @@ class CalculatorOperationsTest {
         assertEquals(1.0, calculatorOperations.subtract(2, 1));
     }
 
+    //square test
+    @Test
+    void squaringSquaresPositiveNumber() {
+        assertEquals(25.0, calculatorOperations.squared(5.0));
+    }
+
+    @Test
+    void squaringSquaresNegativeNumber() {
+        assertEquals(25.0, calculatorOperations.squared(-5.0));
+    }
+
+    @Test
+    void squaringReturnsDoubleWhenIntegerSupplied() {
+        assertEquals(25.0, calculatorOperations.squared(5));
+    }
+
 
 
 
