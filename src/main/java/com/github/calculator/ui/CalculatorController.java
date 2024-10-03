@@ -10,7 +10,6 @@ import javafx.scene.layout.GridPane;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 public class CalculatorController implements Initializable {
     @FXML
@@ -24,7 +23,8 @@ public class CalculatorController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        addListenersToNumberButtons(retrieveButtonList());
+        ArrayList<Button> buttonList = retrieveButtonList();
+        addListenersToAllButtons(buttonList);
     }
 
     private ArrayList<Button> retrieveButtonList() {
@@ -37,9 +37,13 @@ public class CalculatorController implements Initializable {
         return buttonList;
     }
 
+    private void addListenersToAllButtons(ArrayList<Button> buttonList) {
+        addListenersToNumberButtons(buttonList);
+        addListenersToNonNumberButtons(buttonList);
+    }
+
     private void addListenersToNumberButtons(ArrayList<Button> buttonList) {
-        for (int i = 0; i < buttonList.size(); i++) {
-            Button currButton = buttonList.get(i);
+        for (Button currButton : buttonList) {
             String currentButtonValue = currButton.getText();
             if (Character.isDigit(currentButtonValue.charAt(0))) {
                 currButton.setOnAction(event -> {
@@ -47,11 +51,70 @@ public class CalculatorController implements Initializable {
                     sb.append(currentButtonValue);
                     outputLabel.setText(sb.toString());
                 });
-                buttonList.remove(i);
-                i--;
             }
 
         }
     }
+    private void addListenersToNonNumberButtons(ArrayList<Button> buttonList) {
+       for (Button currButton : buttonList) {
+           addListenersToNonDigitOutputButtons(currButton);
+        }
+       for (Button currButton : buttonList) {
+           addListenersToNonDegitLogicButtons(currButton);
+       }
+    }
+
+    private void addListenersToNonDigitOutputButtons(Button currentButton) {
+        String currentButtonValue = currentButton.getText();
+        char buttonChar = currentButtonValue.charAt(0);
+        if (currentButtonValue.equals("x²") || buttonChar == 'U' || buttonChar == 'C' || buttonChar == '=') {
+            return;
+        }
+        if (!Character.isDigit(buttonChar)) { //prevents non text buttons being added to output
+
+            currentButton.setOnAction(event -> {
+                outputLabel.setText(outputLabel.getText() + currentButtonValue);
+            });
+        }
+
+    }
+
+    private void addListenersToNonDegitLogicButtons(Button currentButton) {
+       String currentButtonValue = currentButton.getText();
+       char buttonChar = currentButtonValue.charAt(0);
+       switch (buttonChar) {
+           case 'U': //Undo Button action
+               currentButton.setOnAction(event -> {
+                   if (!outputLabel.getText().isEmpty()) {
+                       String newText = outputLabel.getText().substring(0, outputLabel.getText().length() - 1);
+                       outputLabel.setText(newText);
+                   }
+               });
+               break;
+           case 'C': //Clear button action
+               currentButton.setOnAction(event -> {
+                   outputLabel.setText("");
+               });
+               break;
+           case '=': //Enter button action
+               currentButton.setOnAction(event -> {
+                   processEnterRequest(outputLabel.getText());
+                   outputLabel.setText("");
+               });
+               break;
+           default: break;
+       }
+       if (currentButtonValue.equals("x²")) { //adds power to output
+           currentButton.setOnAction(event -> {
+           outputLabel.setText(outputLabel.getText() + "²");
+           });
+       }
+    }
+
+    public void processEnterRequest(String input) {
+        //send to calculator
+        //receive response to post
+    }
+
 
 }
