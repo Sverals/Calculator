@@ -18,4 +18,12 @@ public class CalculatorOperations {
         return x * x;
     }
 
+    public double squareRoot(double x) {
+        double result = Math.sqrt(x);
+        if (Double.isNaN(result)) {
+            throw new ArithmeticException("NaN");
+        }
+        return result;
+    }
+
 }

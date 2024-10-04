@@ -74,6 +74,17 @@ class CalculatorOperationsTest {
         assertEquals(25.0, calculatorOperations.squared(5));
     }
 
+    //squareRoot test
+    @Test
+    void squareRootWithPositive() {
+        assertEquals(5.0, calculatorOperations.squareRoot(25.0));
+    }
+
+    @Test
+    void squareRootWithNegativeThrowsException() {
+        assertThrows(ArithmeticException.class, () -> calculatorOperations.squareRoot(-5.0));
+    }
+
 
 
 
