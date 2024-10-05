@@ -1,14 +1,19 @@
 package com.github.calculator.logic;
 
-public class CalculatorFunctions {
+import java.util.ArrayList;
+
+public class CalculatorParser {
     private StringBuilder userInput;
     private StringBuilder parenthesis;
+    private ArrayList<StringBuilder> pemdasPieces;
 
-    public CalculatorFunctions(String userInput) {
+    public CalculatorParser(String userInput) {
         this.userInput = new StringBuilder(userInput);
 
         this.parenthesis = new StringBuilder("");
         this.parseParenthesis();
+
+        this.pemdasPieces = new ArrayList<>();
     }
 
     public StringBuilder getUserInput() {
@@ -20,15 +25,21 @@ public class CalculatorFunctions {
     }
 
     private void parseParenthesis() {
+        boolean noParenthesis = true;
+        int indexOfOpeningParenthesis = -1;
+        int indexOfClosingParenthesis = -1;
         for(int i = 0; i < this.userInput.length(); i++) {
-            if(this.userInput.charAt(i) == '(') {
-                int j = i;
-                while(this.userInput.charAt(j) != ')') {
-                    this.parenthesis.append(this.userInput.charAt(j));
-                    j++;
-                }
-                this.parenthesis.append(')');
+            if(this.userInput.charAt(i) == '(' && noParenthesis) {
+                indexOfOpeningParenthesis = i;
+                noParenthesis = false;
             }
+            if(this.userInput.charAt(i) == ')') {
+                indexOfClosingParenthesis = i;
+            }
+        }
+        if(indexOfOpeningParenthesis > -1 && indexOfClosingParenthesis > -1) {
+            this.parenthesis.append(this.userInput.toString()
+                    .substring(indexOfOpeningParenthesis, indexOfClosingParenthesis));
         }
     }
 
